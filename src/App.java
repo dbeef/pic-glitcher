@@ -48,20 +48,12 @@ public class App {
                 result.append(String.format("%02X", bb));
             }
 
-            int beginIndex = 0;
             int endIndex = 0;
 
             //Wyszukuje ostatnie wystapienie
             for (int a = 0; a < buffer.length; a++) {
                 if (Integer.toHexString(buffer[a]).contains(SCAN_END))
                     endIndex = a;
-            }
-            //Wyszukuje pierwsze wystapienie
-            for (int a = 0; a < buffer.length; a++) {
-                if (Integer.toHexString(buffer[a]).contains(SCAN_BEGINNING)) {
-                    beginIndex = a;
-                    break;
-                }
             }
 
             for (int b = 0; b < numberOfCopies; b++) {
