@@ -73,21 +73,14 @@ public class App {
                 boolean end = false;
                 boolean added = false;
 
-                for (int a = 0; a < buffer.length; a++) {
-                    if (a == endIndex)
-                        end = true;
-
-                    if (a == beginIndex) {
                         if (!end && !added) {
                             for (int g = 0; g < numberOfBytes; g++) {
-                                int whichToChange = ThreadLocalRandom.current().nextInt(0, endIndex - a);
+                                int whichToChange = ThreadLocalRandom.current().nextInt(0, endIndex);
                                 byte valueOfSwappedByte = (byte) ThreadLocalRandom.current().nextInt(-127, 128 + 1);
-                                tempBuffer[a + 1 + whichToChange] = valueOfSwappedByte;
+                                tempBuffer[whichToChange] = valueOfSwappedByte;
                             }
                             added = true;
                         }
-                    }
-                }
                 os.write(tempBuffer);
                 os.close();
             }
