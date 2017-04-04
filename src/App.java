@@ -38,38 +38,33 @@ public class App {
 
         System.out.println("Started reading input bytes.");
 
-          is = new FileInputStream(new File(inputFileName));
-            byte[] buffer = new byte[BUFFER_SIZE];
-            is.read(buffer);
-            is.close();
+        is = new FileInputStream(new File(inputFileName));
+        byte[] buffer = new byte[BUFFER_SIZE];
+        is.read(buffer);
+        is.close();
 
-            StringBuilder result = new StringBuilder();
-            for (byte bb : buffer) {
-                result.append(String.format("%02X", bb));
+        int endIndex = 0;
+
+        //Wyszukuje ostatnie wystapienie
+        for (int a = 0; a < buffer.length; a++) {
+            if (Integer.toHexString(buffer[a]).contains(SCAN_END))
+                endIndex = a;
+        }
+
+        for (int b = 0; b < numberOfCopies; b++) {
+
+            byte[] tempBuffer = buffer.clone();
+
+            os = new FileOutputStream(new File("pic-glitcher-pictures/copy-" + b + ".jpg"));
+
+            for (int g = 0; g < numberOfBytes; g++) {
+                int whichToChange = ThreadLocalRandom.current().nextInt(0, endIndex);
+                byte valueOfSwappedByte = (byte) ThreadLocalRandom.current().nextInt(-127, 128 + 1);
+                tempBuffer[whichToChange] = valueOfSwappedByte;
             }
-
-            int endIndex = 0;
-
-            //Wyszukuje ostatnie wystapienie
-            for (int a = 0; a < buffer.length; a++) {
-                if (Integer.toHexString(buffer[a]).contains(SCAN_END))
-                    endIndex = a;
-            }
-
-            for (int b = 0; b < numberOfCopies; b++) {
-
-                byte[] tempBuffer = buffer.clone();
-
-                os = new FileOutputStream(new File("pic-glitcher-pictures/copy-" + b + ".jpg"));
-
-                for (int g = 0; g < numberOfBytes; g++) {
-                                int whichToChange = ThreadLocalRandom.current().nextInt(0, endIndex);
-                                byte valueOfSwappedByte = (byte) ThreadLocalRandom.current().nextInt(-127, 128 + 1);
-                                tempBuffer[whichToChange] = valueOfSwappedByte;
-                            }
-                os.write(tempBuffer);
-                os.close();
-            }
+            os.write(tempBuffer);
+            os.close();
+        }
     }
 
 
