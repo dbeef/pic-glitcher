@@ -70,17 +70,11 @@ public class App {
 
                 os = new FileOutputStream(new File("pic-glitcher-pictures/copy-" + b + ".jpg"));
 
-                boolean end = false;
-                boolean added = false;
-
-                        if (!end && !added) {
-                            for (int g = 0; g < numberOfBytes; g++) {
+                for (int g = 0; g < numberOfBytes; g++) {
                                 int whichToChange = ThreadLocalRandom.current().nextInt(0, endIndex);
                                 byte valueOfSwappedByte = (byte) ThreadLocalRandom.current().nextInt(-127, 128 + 1);
                                 tempBuffer[whichToChange] = valueOfSwappedByte;
                             }
-                            added = true;
-                        }
                 os.write(tempBuffer);
                 os.close();
             }
